@@ -5,7 +5,7 @@
 #
 # Copyright 2006 YAMASHINA Hio
 # -----------------------------------------------------------------------------
-# $Id$
+# $Id: /perl/Hash-Extract/lib/Hash/Extract.pm 580 2007-12-19T06:29:03.536065Z hio  $
 # -----------------------------------------------------------------------------
 package Hash::Extract;
 use strict;
@@ -15,8 +15,11 @@ use B;
 use base 'Exporter';
 
 our @EXPORT_OK = qw(hash_extract);
+our %EXPORT_TAGS = (
+	all => \@EXPORT_OK,
+);
 
-our $VERSION = '0.01';
+our $VERSION = '0.02';
 
 1;
 
@@ -31,7 +34,10 @@ sub hash_extract
 	{
 		my $name = var_name(1, \$var);
 		$name or die "could not detect name of variable";
+		{
+		local(%+);
 		$name =~ s/^\$//;# or die "argument is not scalar variable: $name";
+		}
 		exists($hash->{$name}) or die "no such hash element: $name";
 		$var = $hash->{$name}
 	}
@@ -62,14 +68,14 @@ Hash::Extract - extract hash values onto lexical variables.
 
 =head1 VERSION
 
-Version 0.01
+Version 0.02
 
 
 =head1 SYNOPSIS
 
  use Hash::Extract qw(hash_extract);
  
- %hash = ( red => 'apple, blue => 'sky', );
+ %hash = ( red => 'apple', blue => 'sky', );
  hash_extract( \%hash, my $blue );
  print $blue;  # ==> 'sky'
 
@@ -156,7 +162,7 @@ L<PadWalker>
 
 =head1 COPYRIGHT & LICENSE
 
-Copyright 2006 YAMASHINA Hio, all rights reserved.
+Copyright 2006-2007 YAMASHINA Hio, all rights reserved.
 
 
 This program is free software; you can redistribute it and/or modify it

@@ -6,10 +6,10 @@ use inc::ExtUtils::MY_Metafile;
 my_metafile 'Hash::Extract' => {
 	license => 'perl',
 	requires => {
-		'Test::More' => 0,
+		'PadWalker' => 0,
 	},
 	build_requires => {
-		'PadWalker' => 0,
+		'Test::More' => 0,
 	}
 };
 
